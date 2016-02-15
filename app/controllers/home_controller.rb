@@ -11,10 +11,6 @@ class HomeController < ApplicationController
     
     if params[:city] != nil
         response = HTTParty.get("http://api.wunderground.com/api/#{ENV['wunderground_api_key']}/geolookup/conditions/q/#{params[:state]}/#{params[:city]}.json") 
-    else
-        response = HTTParty.get("http://api.wunderground.com/api/#{ENV['wunderground_api_key']}/geolookup/conditions/q/NC/Asheville.json")
-    end
-       
     @location = response["location"]["city"]
     @temp_f = response["current_observation"]["temp_f"]
     @temp_c = response["current_observation"]["temp_c"]
@@ -22,6 +18,10 @@ class HomeController < ApplicationController
     @weather_words = response["current_observation"]["weather"]
     @forecast_link = response["current_observation"]["forecast_url"]
     @feels_like = response["current_observation"]["feelslike_f"]
+    else
+        response = HTTParty.get("http://api.wunderground.com/api/#{ENV['wunderground_api_key']}/geolookup/conditions/q/NC/Asheville.json")
+    end
+       
 
 if @weather_words == "Overcast" || @weather_words == "Cloudy"
     @url = "https://images.unsplash.com/photo-1445264618000-f1e069c5920f?crop=entropy&dpr=2&fit=crop&fm=jpg&h=775&ixjsv=2.0.0&ixlib=rb-0.3.5&q=50&w=1250"
