@@ -1,7 +1,6 @@
 class HomeController < ApplicationController
   def index
-    response = HTTParty.get("http://api.wunderground.com/api/#{ENV['wunderground_api_key']}/geolookup/conditions/q/NC/Asheville.json")
-    
+
     @states = %w(HI AK CA OR WA ID UT NV AZ NM CO WY MT ND SD NB KS OK TX LA AR MO IA MN WI IL IN MI OH KY TN MS AL GA FL SC NC VA WV DE MD PA NY NJ CT RI MA VT NH ME DC )
     
    @states.sort!
@@ -25,6 +24,7 @@ class HomeController < ApplicationController
     @weather_words = response["current_observation"]["weather"]
     @forecast_link = response["current_observation"]["forecast_url"]
     @feels_like = response["current_observation"]["feelslike_f"]
+    
 
       if @weather_words == "Overcast" || @weather_words == "Cloudy"
           @url = "https://images.unsplash.com/photo-1445264618000-f1e069c5920f?crop=entropy&dpr=2&fit=crop&fm=jpg&h=775&ixjsv=2.0.0&ixlib=rb-0.3.5&q=50&w=1250"
